@@ -1,0 +1,52 @@
+name: Deploy website to SFTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: sftp-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Upload static files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Upload files via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          SFTP_REMOTE_DIR: ${{ secrets.SFTP_REMOTE_DIR }}
+        run: |
+          : "${SFTP_HOST:?Missing SFTP_HOST secret}"
+          : "${SFTP_USERNAME:?Missing SFTP_USERNAME secret}"
+          : "${SFTP_PASSWORD:?Missing SFTP_PASSWORD secret}"
+          : "${SFTP_REMOTE_DIR:?Missing SFTP_REMOTE_DIR secret}"
+
+          lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "sftp://$SFTP_HOST:${SFTP_PORT:-22}" <<EOF
+          set sftp:auto-confirm yes
+          set net:timeout 20
+          set net:max-retries 2
+          mirror --reverse --delete --verbose \
+            --exclude-glob .git/ \
+            --exclude-glob .git/** \
+            --exclude-glob .github/ \
+            --exclude-glob .github/** \
+            --exclude README.md \
+            ./ "$SFTP_REMOTE_DIR"
+          bye
+          EOF
