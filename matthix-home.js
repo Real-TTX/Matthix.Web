@@ -24,12 +24,27 @@
     const statGeneration = document.getElementById("stat-generation");
     const livingGraph = document.getElementById("living-graph");
     const graphLabel = document.getElementById("graph-label");
-    const sectionLinks = Array.from(document.querySelectorAll("[data-section-link]"));
-    const sections = sectionLinks
-        .map((link) => document.querySelector(link.getAttribute("href")))
-        .filter(Boolean);
+    const mainShell = document.querySelector(".site-shell");
+    const navLinks = Array.from(document.querySelectorAll("[data-nav-link]"));
+    const routeByHash = {
+        "": "home",
+        "#": "home",
+        "#home": "home",
+        "#profil": "leistung",
+        "#leistung": "leistung",
+        "#stack": "leistung",
+        "#referenzen": "referenzen",
+        "#kontakt": "kontakt"
+    };
+    const hashByRoute = {
+        home: "#home",
+        leistung: "#leistung",
+        referenzen: "#referenzen",
+        kontakt: "#kontakt"
+    };
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactPanelQuery = window.matchMedia("(max-width: 760px)");
     const storageKey = "matthix-game-settings";
     const generationHistory = [];
     const maxHistory = 4;
@@ -138,7 +153,7 @@
     let seedThreshold = Number(seedThresholdInput?.value ?? 0.76);
     let autoResetGeneration = Number(autoResetGenerationInput?.value ?? 120);
     const graphHistoryLength = 48;
-    let settingsCollapsed = false;
+    let settingsCollapsed = compactPanelQuery.matches;
 
     const loadSettings = () => {
         try {
@@ -157,9 +172,6 @@
             if (typeof parsed.theme === "string" && themes[parsed.theme]) {
                 activeTheme = parsed.theme;
             }
-            if (typeof parsed.settingsCollapsed === "boolean") {
-                settingsCollapsed = parsed.settingsCollapsed;
-            }
         } catch {
             // Ignore malformed local storage content and keep defaults.
         }
@@ -170,8 +182,7 @@
             window.localStorage.setItem(storageKey, JSON.stringify({
                 seedThreshold,
                 autoResetGeneration,
-                theme: activeTheme,
-                settingsCollapsed
+                theme: activeTheme
             }));
         } catch {
             // Ignore local storage write failures.
@@ -1050,6 +1061,235 @@
         gameToggle?.setAttribute("aria-label", "Game of Life Modus");
     };
 
+    const routeTemplates = {
+        home: `
+            <section class="hero">
+                <div class="hero-mark">
+                    <svg viewBox="0 0 220 170" role="img" aria-label="Matthix Logo">
+                        <path d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
+                    </svg>
+                </div>
+
+                <div class="hero-copy">
+                    <p class="kicker">Plattformen. Netzwerke. Software.</p>
+                    <h1>MATTHIX</h1>
+                    <p class="lead">
+                        Ich plane, entwickle und stabilisiere technische Systeme an der Schnittstelle von
+                        Platform Engineering, Enterprise Networking und produktionsnaher Softwareentwicklung.
+                    </p>
+                </div>
+
+                <div class="hero-aside">
+                    <figure class="visual-frame hero-photo">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=980&q=78" alt="Serverracks in einem Rechenzentrum">
+                    </figure>
+                    <p>Plattformen, Datenmodelle und Software werden gemeinsam gedacht.</p>
+                </div>
+            </section>
+        `,
+        leistung: `
+            <section class="content-band content-band-primary content-band-page services-page">
+                <div class="band-body">
+                    <p class="kicker">Leistung</p>
+                    <h1 class="page-title">Klare technische Grundlagen. Saubere Umsetzung.</h1>
+                    <p>
+                        Ich verbinde Platform Design, Datenbank Design und Software Design mit produktionsnaher
+                        Softwareentwicklung. Ziel sind Systeme, die fachliche Prozesse sauber abbilden, technisch
+                        nachvollziehbar bleiben und sich im Betrieb weiterentwickeln lassen.
+                    </p>
+                    <figure class="visual-frame service-visual">
+                        <img src="https://images.unsplash.com/photo-1774600134168-b9ebd714e4e1?auto=format&fit=crop&w=980&q=78" alt="Team arbeitet gemeinsam an Software und Konzepten" loading="lazy">
+                        <figcaption>Konzeption, Datenmodell und Entwicklung als zusammenhängender Prozess.</figcaption>
+                    </figure>
+                    <div class="service-grid">
+                        <article class="service-item">
+                            <span>01</span>
+                            <h2>Platform Design</h2>
+                            <p>
+                                Struktur, Module, Rollen, Schnittstellen und Betriebslogik für Plattformen, die mehr
+                                können müssen als nur eine Oberfläche anzeigen.
+                            </p>
+                        </article>
+                        <article class="service-item">
+                            <span>02</span>
+                            <h2>Datenbank Design</h2>
+                            <p>
+                                Datenmodelle, Abfragen und Strukturen, die fachliche Prozesse abbilden und auch bei
+                                Wachstum lesbar, wartbar und performant bleiben.
+                            </p>
+                        </article>
+                        <article class="service-item">
+                            <span>03</span>
+                            <h2>Software Design</h2>
+                            <p>
+                                Architekturentscheidungen, Komponenten und technische Konzepte, die Entwicklung,
+                                Erweiterbarkeit und Betrieb zusammenbringen.
+                            </p>
+                        </article>
+                        <article class="service-item service-item-wide">
+                            <span>04</span>
+                            <h2>Softwareentwicklung</h2>
+                            <p>
+                                Umsetzung von Web-, Business- und Prozessplattformen mit Blick auf saubere Abläufe,
+                                technische Stabilität und langfristige Wartbarkeit.
+                            </p>
+                            <div class="stack-words stack-words-compact">
+                                <span>Proxmox</span>
+                                <span>UniFi</span>
+                                <span>Hyper-V</span>
+                                <span>MSSQL</span>
+                                <span>Platform Engineering</span>
+                                <span>Enterprise Networking</span>
+                                <span>Operations</span>
+                                <span>Development</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        `,
+        referenzen: `
+            <section class="content-band content-band-primary content-band-page references-page">
+                <div class="band-body">
+                    <p class="kicker">Referenzen</p>
+                    <h1 class="page-title">Ausgewählte Projekte mit technischem Anspruch.</h1>
+                    <p>
+                        Ausgewählte Projekte zeigen, in welchen Kontexten Architektur, Entwicklung und Beratung
+                        praktisch zusammenkommen: Plattformen, Handelssysteme und digitale Verwaltungsprozesse.
+                    </p>
+                    <div class="reference-list">
+                        <article class="reference-item">
+                            <figure class="visual-frame reference-photo">
+                                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=680&q=78" alt="Serverracks als Symbol für Plattformarchitektur" loading="lazy">
+                            </figure>
+                            <div class="reference-content">
+                                <span>AERA-Online</span>
+                                <h2>Führende deutsche Dental-Plattform</h2>
+                                <p>
+                                    Technische Plattformarbeit für eine etablierte Lösung im Dentalmarkt:
+                                    Strukturierung, Architekturentscheidungen und Weiterentwicklung mit Fokus auf
+                                    belastbare Prozesse.
+                                </p>
+                                <div class="reference-tags" aria-label="Key Skills">
+                                    <span>Platform Design</span>
+                                    <span>Architektur</span>
+                                    <span>System Design</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="reference-item">
+                            <figure class="visual-frame reference-photo">
+                                <img src="https://images.unsplash.com/photo-1762097708448-8bf115421139?auto=format&fit=crop&w=680&q=78" alt="Hifi-Komponenten und Audiotechnik auf einem Tisch" loading="lazy">
+                            </figure>
+                            <div class="reference-content">
+                                <span>Topas-Hifi</span>
+                                <h2>Renommierter Hifi-Händler</h2>
+                                <p>
+                                    Online-Shop und Beratung für einen renommierten Hifi-Händler, mit Fokus auf
+                                    Produktlogik, kaufmännische Abläufe und eine belastbare digitale Verkaufsstrecke.
+                                </p>
+                                <div class="reference-tags" aria-label="Key Skills">
+                                    <span>Online-Shop</span>
+                                    <span>E-Commerce</span>
+                                    <span>Business Consulting</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="reference-item">
+                            <figure class="visual-frame reference-photo">
+                                <img src="https://images.unsplash.com/photo-1774600134168-b9ebd714e4e1?auto=format&fit=crop&w=680&q=78" alt="Teamarbeit mit Laptops für digitale Prozesse" loading="lazy">
+                            </figure>
+                            <div class="reference-content">
+                                <span>Schulio</span>
+                                <h2>Digitale Prozesse für Schulanmeldungen</h2>
+                                <p>
+                                    Digitale Plattform für Schulanmeldungen an fortführenden Schulen. Neben der Anmeldung
+                                    können nachgelagerte Prüf-, Bearbeitungs- und Verwaltungsprozesse abgebildet werden.
+                                </p>
+                                <div class="reference-tags" aria-label="Key Skills">
+                                    <span>Platform Design</span>
+                                    <span>Softwareentwicklung</span>
+                                    <span>Prozessdigitalisierung</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        `,
+        kontakt: `
+            <section class="content-band content-band-end content-band-page">
+                <div class="band-body">
+                    <p class="kicker">Kontakt</p>
+                    <h1 class="page-title">Wenn Technik klarer, stabiler oder belastbarer werden soll, sprechen wir.</h1>
+                    <p>
+                        Ob Plattform, Prozess, Infrastruktur oder technische Neuausrichtung: Ich steige dort ein, wo
+                        Anforderungen konkret werden und Systeme verlässlich funktionieren müssen.
+                    </p>
+                    <a class="contact-email" href="mailto:hi@matthix.de">hi@matthix.de</a>
+                </div>
+            </section>
+        `
+    };
+
+    const normalizeHash = (hash) => hash.toLowerCase();
+    const getRouteFromHash = (hash) => routeByHash[normalizeHash(hash)] ?? "home";
+    const getRouteFromLocation = () => getRouteFromHash(window.location.hash);
+
+    let currentRoute = getRouteFromLocation();
+
+    const getRouteFromHref = (href) => {
+        try {
+            const url = new URL(href, window.location.href);
+            return getRouteFromHash(url.hash);
+        } catch {
+            return "home";
+        }
+    };
+
+    const setDocumentTitle = (route) => {
+        const titles = {
+            home: "Matthix",
+            leistung: "Leistung | Matthix",
+            referenzen: "Referenzen | Matthix",
+            kontakt: "Kontakt | Matthix"
+        };
+
+        document.title = titles[route] ?? titles.home;
+    };
+
+    const renderRoute = (route, options = {}) => {
+        if (!mainShell || !routeTemplates[route]) {
+            return;
+        }
+
+        const { push = false, transition = false } = options;
+        const applyRoute = () => {
+            currentRoute = route;
+            mainShell.innerHTML = routeTemplates[route];
+            mainShell.classList.remove("is-page-transitioning");
+            setDocumentTitle(route);
+            updateActiveSection();
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+        };
+
+        if (push) {
+            try {
+                window.history.pushState({ route }, "", hashByRoute[route]);
+            } catch {
+                // Keep SPA rendering even if history updates are blocked.
+            }
+        }
+
+        if (!transition || prefersReducedMotion) {
+            applyRoute();
+            return;
+        }
+
+        mainShell.classList.add("is-page-transitioning");
+        window.setTimeout(applyRoute, 160);
+    };
+
     const applySettingsPanelState = () => {
         if (!gamePanel || !settingsToggle) {
             return;
@@ -1057,28 +1297,32 @@
 
         gamePanel.classList.toggle("is-collapsed", settingsCollapsed);
         settingsToggle.setAttribute("aria-label", settingsCollapsed ? "Settings ausklappen" : "Settings einklappen");
-        saveSettings();
+    };
+
+    const syncSettingsPanelForViewport = () => {
+        settingsCollapsed = compactPanelQuery.matches;
+        applySettingsPanelState();
     };
 
     const updateActiveSection = () => {
         if (body.classList.contains("game-mode")) {
-            sectionLinks.forEach((link) => link.classList.remove("is-active"));
+            navLinks.forEach((link) => link.classList.remove("is-active"));
             return;
         }
 
-        const triggerY = window.scrollY + 160;
-        let activeId = sections[0]?.id ?? "";
+        navLinks.forEach((link) => {
+            link.classList.toggle("is-active", getRouteFromHref(link.href) === currentRoute);
+        });
+    };
 
-        for (const section of sections) {
-            if (section.offsetTop <= triggerY) {
-                activeId = section.id;
-            }
+    const syncRouteFromLocation = () => {
+        const route = getRouteFromLocation();
+        if (route === currentRoute) {
+            updateActiveSection();
+            return;
         }
 
-        sectionLinks.forEach((link) => {
-            const isActive = link.getAttribute("href") === `#${activeId}`;
-            link.classList.toggle("is-active", isActive);
-        });
+        renderRoute(route, { transition: true });
     };
 
     const render = () => {
@@ -1115,6 +1359,7 @@
     }
     livingHistory = Array(graphHistoryLength).fill(0);
     dyingHistory = Array(graphHistoryLength).fill(0);
+    renderRoute(currentRoute, { transition: false });
     resize();
     setTheme(activeTheme);
     render();
@@ -1137,6 +1382,30 @@
         openGameMode();
         updateActiveSection();
     });
+    document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[href]");
+        if (!link || link.target || link.hasAttribute("download")) {
+            return;
+        }
+
+        const href = link.getAttribute("href");
+        if (!href || !href.startsWith("#")) {
+            return;
+        }
+
+        if (!routeByHash.hasOwnProperty(normalizeHash(href))) {
+            return;
+        }
+
+        event.preventDefault();
+        const route = getRouteFromHash(href);
+        if (route === currentRoute) {
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+            return;
+        }
+
+        renderRoute(route, { push: true, transition: true });
+    });
     settingsToggle?.addEventListener("click", () => {
         settingsCollapsed = !settingsCollapsed;
         applySettingsPanelState();
@@ -1158,6 +1427,13 @@
     themeSelect?.addEventListener("change", (event) => {
         setTheme(event.target.value);
     });
+    if (typeof compactPanelQuery.addEventListener === "function") {
+        compactPanelQuery.addEventListener("change", syncSettingsPanelForViewport);
+    } else {
+        compactPanelQuery.addListener(syncSettingsPanelForViewport);
+    }
+    window.addEventListener("popstate", syncRouteFromLocation);
+    window.addEventListener("hashchange", syncRouteFromLocation);
     window.addEventListener("resize", resize);
     window.addEventListener("scroll", updateActiveSection, { passive: true });
 })();

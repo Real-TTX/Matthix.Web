@@ -12,7 +12,7 @@
 
     <div class="chrome-shell">
         <header class="masthead">
-            <a class="brand" href="#top">
+            <a class="brand" href="#home">
                 <span class="brand-icon" aria-hidden="true">
                     <svg viewBox="0 0 220 170" role="img">
                         <path d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
@@ -21,10 +21,10 @@
                 <span class="brand-text">MATTHIX</span>
             </a>
         <nav class="site-nav">
-            <a data-section-link href="#profil">Profil</a>
-            <a data-section-link href="#leistung">Leistung</a>
-            <a data-section-link href="#stack">Stack</a>
-            <a data-section-link href="#kontakt">Kontakt</a>
+            <a data-nav-link href="#home">Startseite</a>
+            <a data-nav-link href="#leistung">Leistung</a>
+            <a data-nav-link href="#referenzen">Referenzen</a>
+            <a data-nav-link href="#kontakt">Kontakt</a>
         </nav>
         <div class="nav-actions">
             <button id="game-toggle" class="icon-toggle" type="button" aria-label="Game of Life Modus">
@@ -44,89 +44,7 @@
         </div>
         </header>
 
-        <main id="top" class="site-shell">
-            <section class="hero">
-                <div class="hero-mark">
-                    <svg viewBox="0 0 220 170" role="img" aria-label="Matthix Logo">
-                        <path d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
-                    </svg>
-                </div>
-
-                <div class="hero-copy">
-                    <p class="kicker">Plattformen. Netzwerke. Entwicklung.</p>
-                    <h1>MATTHIX</h1>
-                    <p class="lead">
-                        Ich bin Matthias. Ich liebe alles, was ein Kabel hat. Ich arbeite an der Schnittstelle aus
-                        Plattform-Entwicklung, Mid-Size Enterprise Networking und technischer Verantwortung.
-                    </p>
-                </div>
-
-                <div class="hero-aside">
-                    <p>Kein Demo-Portfolio. Kein Agentur-Baukasten.</p>
-                    <p>Mehr Infrastruktur, mehr Betrieb, mehr echte Technik.</p>
-                </div>
-            </section>
-
-            <section id="profil" class="content-band content-band-primary">
-                <div class="band-index">01</div>
-                <div class="band-body">
-                    <p class="kicker">Profil</p>
-                    <h2>Technik soll nicht nett aussehen. Sie soll tragen.</h2>
-                    <p>
-                        Mein Fokus liegt dort, wo Plattformen wirklich genutzt werden: in Infrastruktur, Virtualisierung,
-                        Netzwerken und produktionsnahen Systemen. Ich denke nicht in Oberflaechen, sondern in Last,
-                        Betrieb, Wartbarkeit und Verantwortung.
-                    </p>
-                </div>
-            </section>
-
-            <section id="leistung" class="content-band content-band-split">
-                <div class="band-index">02</div>
-                <div class="band-body">
-                    <p class="kicker">Leistung</p>
-                    <h2>Von Architektur bis Betrieb.</h2>
-                </div>
-                <div class="band-list">
-                    <ul>
-                        <li>Plattform-Architektur und technische Konzeption</li>
-                        <li>Virtualisierung mit Proxmox und Hyper-V</li>
-                        <li>UniFi-Netzwerke und Enterprise-nahe Infrastruktur</li>
-                        <li>MSSQL-nahe Plattformen und technische Optimierung</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section id="stack" class="content-band content-band-primary">
-                <div class="band-index">03</div>
-                <div class="band-body">
-                    <p class="kicker">Stack</p>
-                    <h2>Kabelgebunden. Virtualisiert. Produktiv.</h2>
-                    <div class="stack-words">
-                        <span>Proxmox</span>
-                        <span>UniFi</span>
-                        <span>Hyper-V</span>
-                        <span>MSSQL</span>
-                        <span>Platform Engineering</span>
-                        <span>Enterprise Networking</span>
-                        <span>Operations</span>
-                        <span>Development</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="kontakt" class="content-band content-band-end">
-                <div class="band-index">04</div>
-                <div class="band-body">
-                    <p class="kicker">Kontakt</p>
-                    <h2>Wenn deine Plattform klarer, stabiler oder belastbarer werden soll, lass uns sprechen.</h2>
-                    <p>
-                        Diese Seite bleibt bewusst rein clientseitig. Kontaktdaten, Mail oder ein Formular koennen wir
-                        als naechsten Schritt direkt in diese Struktur einbauen.
-                    </p>
-                    <a class="text-link" href="#top">Zurueck nach oben</a>
-                </div>
-            </section>
-        </main>
+        <main id="top" class="site-shell" aria-live="polite"></main>
     </div>
 
     <section id="game-panel" class="game-panel" aria-live="polite">
