@@ -19,10 +19,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install lftp
+      - name: Install deployment tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y lftp
+          sudo apt-get install -y lftp sshpass
 
       - name: Upload files via SFTP
         env:
@@ -37,10 +37,13 @@ jobs:
           : "${SFTP_PASSWORD:?Missing SFTP_PASSWORD secret}"
           : "${SFTP_REMOTE_DIR:?Missing SFTP_REMOTE_DIR secret}"
 
-          lftp -u "$SFTP_USERNAME","$SFTP_PASSWORD" "sftp://$SFTP_HOST:${SFTP_PORT:-22}" <<EOF
-          set sftp:auto-confirm yes
+          export SSHPASS="$SFTP_PASSWORD"
+
+          lftp <<EOF
+          set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           set net:timeout 20
           set net:max-retries 2
+          open -u "$SFTP_USERNAME","" "sftp://$SFTP_HOST:${SFTP_PORT:-22}"
           mirror --reverse --delete --verbose \
             --exclude-glob .git/ \
             --exclude-glob .git/** \
