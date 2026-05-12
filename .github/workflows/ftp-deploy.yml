@@ -56,6 +56,7 @@ jobs:
           set net:timeout 20
           set net:max-retries 2
           set ftp:passive-mode true
+          set ssl:verify-certificate no
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_HOST:${FTP_PORT:-21}"
           mirror --reverse --delete --verbose \
             --exclude-glob .git/ \
