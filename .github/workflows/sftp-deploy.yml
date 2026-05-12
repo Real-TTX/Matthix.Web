@@ -39,6 +39,18 @@ jobs:
 
           export SSHPASS="$SFTP_PASSWORD"
 
+          sshpass -e sftp \
+            -oBatchMode=no \
+            -oStrictHostKeyChecking=no \
+            -oUserKnownHostsFile=/dev/null \
+            -P "${SFTP_PORT:-22}" \
+            "$SFTP_USERNAME@$SFTP_HOST" <<EOF
+          pwd
+          cd "$SFTP_REMOTE_DIR"
+          pwd
+          bye
+          EOF
+
           lftp <<EOF
           set sftp:connect-program "sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           set net:timeout 20
