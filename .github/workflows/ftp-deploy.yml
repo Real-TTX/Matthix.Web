@@ -37,6 +37,21 @@ jobs:
           : "${FTP_PASSWORD:?Missing FTP_PASSWORD secret}"
           : "${FTP_REMOTE_DIR:?Missing FTP_REMOTE_DIR secret}"
 
+          if [[ "$FTP_HOST" == *"://"* || "$FTP_HOST" == */* ]]; then
+            echo "::error::FTP_HOST must be only the hostname, for example ftp.example.com. Do not include ftp://, a port, or a path."
+            exit 1
+          fi
+
+          if [[ -n "${FTP_PORT:-}" && ! "$FTP_PORT" =~ ^[0-9]+$ ]]; then
+            echo "::error::FTP_PORT must be numeric, for example 21."
+            exit 1
+          fi
+
+          if ! getent hosts "$FTP_HOST" >/dev/null; then
+            echo "::error::FTP_HOST does not resolve. Check the hostname in the FTP_HOST repository secret."
+            exit 1
+          fi
+
           lftp <<EOF
           set net:timeout 20
           set net:max-retries 2
