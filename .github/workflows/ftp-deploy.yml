@@ -1,0 +1,53 @@
+name: Deploy website to FTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Upload static files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Upload files via FTP
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          : "${FTP_HOST:?Missing FTP_HOST secret}"
+          : "${FTP_USERNAME:?Missing FTP_USERNAME secret}"
+          : "${FTP_PASSWORD:?Missing FTP_PASSWORD secret}"
+          : "${FTP_REMOTE_DIR:?Missing FTP_REMOTE_DIR secret}"
+
+          lftp <<EOF
+          set net:timeout 20
+          set net:max-retries 2
+          set ftp:passive-mode true
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_HOST:${FTP_PORT:-21}"
+          mirror --reverse --delete --verbose \
+            --exclude-glob .git/ \
+            --exclude-glob .git/** \
+            --exclude-glob .github/ \
+            --exclude-glob .github/** \
+            --exclude README.md \
+            ./ "$FTP_REMOTE_DIR"
+          bye
+          EOF
