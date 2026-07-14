@@ -1,0 +1,15 @@
+# .NET build output
+bin/
+obj/
+out/
+publish/
+*.user
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

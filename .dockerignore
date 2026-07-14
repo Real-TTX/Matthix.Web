@@ -1,0 +1,27 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# IDE / tooling
+.vs/
+.vscode/
+.idea/
+*.user
+
+# Git & CI
+.git/
+.github/
+.gitignore
+.claude/
+
+# Docs & misc
+README.md
+docker-compose.yml
+*.md
+
+# Legacy static site (superseded by the ASP.NET Core app)
+index.html
+styles.css
+matthix-home.js

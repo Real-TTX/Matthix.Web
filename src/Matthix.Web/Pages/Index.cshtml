@@ -1,0 +1,157 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = Model.Site.BrandName;
+    var site = Model.Site;
+}
+
+<section class="hero" id="home">
+    <div class="hero-inner">
+        <h1 class="hero-title reveal">
+            <span class="hero-logo" aria-hidden="true">
+                <svg viewBox="0 0 220 170" role="img">
+                    <path pathLength="1" d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
+                </svg>
+            </span>
+            <span class="hero-wordmark">@site.BrandName</span>
+        </h1>
+        <p class="kicker hero-tagline reveal">@site.Tagline</p>
+        <p class="hero-lead reveal">@site.HeroLead</p>
+        <div class="hero-actions reveal">
+            <a class="btn btn-primary" href="#kontakt">Kontakt aufnehmen</a>
+            <a class="btn btn-ghost" href="#leistung">Leistungen ansehen</a>
+        </div>
+        <div class="hero-stack reveal" aria-label="Technologien">
+            @foreach (var tech in site.Stack.Take(4))
+            {
+                <span>@tech</span>
+            }
+        </div>
+    </div>
+    <span class="scroll-hint" aria-hidden="true">
+        <span></span>
+    </span>
+</section>
+
+<section class="section" id="leistung">
+    <div class="section-head reveal">
+        <p class="kicker">Leistung</p>
+        <h2 class="section-title">Klare technische Grundlagen. Saubere Umsetzung.</h2>
+        <p class="section-intro">@site.ServicesIntro</p>
+    </div>
+
+    <div class="service-grid">
+        @foreach (var service in site.Services)
+        {
+            <article class="service-card reveal">
+                <span class="service-number">@service.Number</span>
+                <h3>@service.Title</h3>
+                <p>@service.Description</p>
+            </article>
+        }
+    </div>
+
+    <div class="stack-words reveal" aria-label="Technologie-Stack">
+        @foreach (var tech in site.Stack)
+        {
+            <span>@tech</span>
+        }
+    </div>
+</section>
+
+<section class="atmosphere">
+    <img class="atmosphere-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=70"
+         alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <div class="atmosphere-inner reveal">
+        <p class="kicker">Infrastruktur</p>
+        <p class="atmosphere-text">Plattformen, Datenmodelle und Software werden gemeinsam gedacht — vom Rechenzentrum bis zur Oberfläche.</p>
+    </div>
+</section>
+
+<section class="section" id="projekte">
+    <div class="section-head reveal">
+        <p class="kicker">Projekte</p>
+        <h2 class="section-title">Übersicht eigener Produkte.</h2>
+        <p class="section-intro">@site.ProjectsIntro</p>
+    </div>
+
+    <div class="project-grid">
+        @foreach (var project in site.Projects)
+        {
+            <article class="project-card reveal">
+                <div class="project-visual" style="--project-accent: @project.Accent;">
+                    <span class="project-mark" aria-hidden="true">@project.Mark</span>
+                    <span class="project-visual-name">@project.Name</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-headline">
+                        <h3>@project.Name</h3>
+                        <span class="project-tagline">@project.Tagline</span>
+                    </div>
+                    <p>@project.Description</p>
+                    <div class="project-tags" aria-label="Tech-Stack">
+                        @foreach (var tag in project.Tags)
+                        {
+                            <span>@tag</span>
+                        }
+                    </div>
+                    <div class="project-links">
+                        @if (project.Website is not null)
+                        {
+                            <a class="project-link" href="@project.Website" target="_blank" rel="noopener noreferrer">
+                                Website
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                            </a>
+                        }
+                        @if (project.Repo is not null)
+                        {
+                            <a class="project-link" href="@project.Repo" target="_blank" rel="noopener noreferrer">
+                                Code
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section" id="referenzen">
+    <div class="section-head reveal">
+        <p class="kicker">Referenzen</p>
+        <h2 class="section-title">Ausgewählte Projekte mit technischem Anspruch.</h2>
+        <p class="section-intro">
+            Projekte, in denen Architektur, Entwicklung und Beratung praktisch zusammenkommen:
+            Plattformen, Handelssysteme und digitale Verwaltungsprozesse.
+        </p>
+    </div>
+
+    <div class="reference-list">
+        @foreach (var reference in site.References)
+        {
+            <article class="reference-card reveal">
+                <div class="reference-head">
+                    <span class="reference-client">@reference.Client</span>
+                    <h3>@reference.Title</h3>
+                </div>
+                <p>@reference.Description</p>
+                <div class="reference-tags" aria-label="Key Skills">
+                    @foreach (var tag in reference.Tags)
+                    {
+                        <span>@tag</span>
+                    }
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section contact" id="kontakt">
+    <div class="contact-inner reveal">
+        <p class="kicker">Kontakt</p>
+        <h2 class="section-title">@site.ContactHeadline</h2>
+        <p class="section-intro">@site.ContactBody</p>
+        <a class="contact-email" href="mailto:@site.Email">@site.Email</a>
+    </div>
+</section>
