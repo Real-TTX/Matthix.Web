@@ -204,6 +204,9 @@
         if (document.hidden) {
             window.cancelAnimationFrame(rafId);
         } else {
+            // Cancel any queued/pending frame first so a page that loaded in a
+            // hidden tab doesn't end up running two concurrent draw loops.
+            window.cancelAnimationFrame(rafId);
             rafId = window.requestAnimationFrame(draw);
         }
     });

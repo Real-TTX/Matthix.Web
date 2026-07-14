@@ -135,6 +135,12 @@ p {
     border-radius: 6px;
 }
 
+/* The skip-link target receives programmatic focus; suppress the full-width box. */
+main:focus,
+main:focus-visible {
+    outline: none;
+}
+
 /* --- Header ------------------------------------------------------- */
 
 .masthead {
