@@ -11,6 +11,12 @@ public sealed class SiteContent
     public string Tagline => "Plattformen. Netzwerke. Software.";
     public string Email => "hi@matthix.de";
 
+    // Identity fields used by the hero "readout" panel, the gutter rail and the colophon.
+    public string Role => "Platform / Network / Software Engineer";
+    public string Location => "Stuttgart";
+    public string Coordinates => "48.78°N";
+    public string Availability => "Verfügbar";
+
     public string HeroLead =>
         "Ich plane, entwickle und stabilisiere technische Systeme an der Schnittstelle von " +
         "Platform Engineering, Enterprise Networking und produktionsnaher Softwareentwicklung.";
@@ -56,27 +62,27 @@ public sealed class SiteContent
 
     public IReadOnlyList<Project> Projects { get; } =
     [
-        new("Matmon", "M", "#17c8d6", "Self-hosted Monitoring",
+        new("Matmon", "Self-hosted Monitoring",
             "Leichtgewichtiges, Docker-first Monitoring als Alternative zu den großen Suiten: 60+ Sensortypen, " +
             "Probes hinter NAT, persistente Alarme, Live-Maps und Reports – auf dem eigenen Host, optional mit Cloud.",
             [".NET 10", "Docker", "Monitoring", "Self-hosted"],
             "https://matmon.eu", "https://github.com/Real-TTX/Matmon"),
-        new("Schulio", "S", "#e0a83e", "Digitale Schulanmeldung",
+        new("Schulio", "Digitale Schulanmeldung",
             "Plattform für digitale Anmeldeverfahren an Schulen und Schulgruppen – inklusive nachgelagerter " +
             "Prüf-, Bearbeitungs- und Verwaltungsprozesse.",
             ["Plattform", "Prozessdigitalisierung", "SaaS"],
             "https://schulio.eu", null),
-        new("Matdo", "M", "#8b7cf6", "Self-hosted Todo-Plattform",
+        new("Matdo", "Self-hosted Todo-Plattform",
             "Selbst gehostete Aufgaben-App als Mini-Plattform mit PWA: Projekte, Kanban-Boards, Etiketten, " +
             "Erinnerungen und das Teilen von Aufgaben – im Look an Todoist angelehnt.",
             ["ASP.NET Core", "PostgreSQL", "PWA", "Docker"],
             null, "https://github.com/Real-TTX/Matdo"),
-        new("Matgate", "M", "#38c793", "Secure Access Gateway",
+        new("Matgate", "Secure Access Gateway",
             "Self-hosted Gateway fürs Netzwerk: ein Web-UI und ein Login für RDP-, VNC- und SSH-Sessions, " +
             "Datei-Zugriff (SFTP/FTP/SMB) und Website-Proxy – auf Basis von Apache Guacamole.",
             ["C#", "Guacamole", "Remote Access", "Docker"],
             null, "https://github.com/Real-TTX/Matgate"),
-        new("Matddns", "M", "#4aa3ff", "Universeller DynDNS-Updater",
+        new("Matddns", "Universeller DynDNS-Updater",
             "DynDNS-Updater mit Web-UI: IP-Adressen aus vielen Quellen (UniFi, FRITZ!Box, DNS, …) beziehen und " +
             "DNS-Records bei Cloudflare, Hetzner, Netcup & Co. synchron halten – mit Failover und Dual-Stack.",
             ["C#", "DynDNS", "Networking", "Docker"],
@@ -107,15 +113,11 @@ public sealed record NavItem(string Label, string Href);
 
 public sealed record Service(string Number, string Title, string Description);
 
-/// <summary>A showcased own product/project.</summary>
-/// <param name="Mark">Short glyph shown on the placeholder visual tile.</param>
-/// <param name="Accent">Hex accent color used for the tile gradient.</param>
+/// <summary>A showcased own product/project, rendered as a row in the project ledger.</summary>
 /// <param name="Website">Public site, or null if code-only.</param>
 /// <param name="Repo">Source repository, or null if not public.</param>
 public sealed record Project(
     string Name,
-    string Mark,
-    string Accent,
     string Tagline,
     string Description,
     IReadOnlyList<string> Tags,

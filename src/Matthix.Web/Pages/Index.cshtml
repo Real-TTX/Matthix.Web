@@ -5,153 +5,158 @@
     var site = Model.Site;
 }
 
-<section class="hero" id="home">
-    <div class="hero-inner">
-        <h1 class="hero-title reveal">
-            <span class="hero-logo" aria-hidden="true">
-                <svg viewBox="0 0 220 170" role="img">
-                    <path pathLength="1" d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
-                </svg>
-            </span>
-            <span class="hero-wordmark">@site.BrandName</span>
-        </h1>
-        <p class="kicker hero-tagline reveal">@site.Tagline</p>
-        <p class="hero-lead reveal">@site.HeroLead</p>
-        <div class="hero-actions reveal">
-            <a class="btn btn-primary" href="#kontakt">Kontakt aufnehmen</a>
-            <a class="btn btn-ghost" href="#leistung">Leistungen ansehen</a>
+<section class="hero" id="home" data-rail="§ 00 — START">
+    <div class="wrap hero-grid">
+        <span class="index-numeral hero-numeral" aria-hidden="true">00</span>
+
+        <div class="hero-head">
+            <p class="kicker">§ 00 — MATTHIX</p>
+            <h1 class="hero-title">
+                @foreach (var word in site.Tagline.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <span class="hl-line">@word</span>
+                }
+            </h1>
         </div>
-        <div class="hero-stack reveal" aria-label="Technologien">
-            @foreach (var tech in site.Stack.Take(4))
+
+        <p class="hero-lead">@site.HeroLead</p>
+
+        <dl class="readout">
+            <div class="readout-row"><dt>Rolle</dt><span class="leader" aria-hidden="true"></span><dd>@site.Role</dd></div>
+            <div class="readout-row"><dt>Standort</dt><span class="leader" aria-hidden="true"></span><dd>@site.Location · @site.Coordinates</dd></div>
+            <div class="readout-row"><dt>Stack</dt><span class="leader" aria-hidden="true"></span><dd>Proxmox · UniFi · Hyper-V · MSSQL</dd></div>
+            <div class="readout-row"><dt>Status</dt><span class="leader" aria-hidden="true"></span><dd><span class="pip" aria-hidden="true"></span>@site.Availability</dd></div>
+        </dl>
+
+        <div class="hero-actions">
+            <a class="btn btn-solid" href="#kontakt">Kontakt aufnehmen</a>
+            <a class="btn btn-line" href="#leistung">Leistungen ansehen</a>
+        </div>
+    </div>
+    <span class="scroll-hint" aria-hidden="true">SCROLL ↓</span>
+</section>
+
+<section class="section" id="leistung" data-rail="§ 01 — LEISTUNG">
+    <div class="wrap">
+        <div class="section-head">
+            <p class="kicker">§ 01 — Leistung</p>
+            <h2 class="section-title">Klare technische Grundlagen. Saubere Umsetzung.</h2>
+            <p class="section-intro">@site.ServicesIntro</p>
+        </div>
+
+        <div class="rows" role="list">
+            @foreach (var service in site.Services)
+            {
+                <article class="row" role="listitem">
+                    <span class="index-numeral row-numeral" aria-hidden="true">@service.Number</span>
+                    <h3 class="row-title">@service.Title</h3>
+                    <p class="row-desc">@service.Description</p>
+                </article>
+            }
+        </div>
+
+        <div class="stack-index" aria-label="Technologie-Stack">
+            @foreach (var tech in site.Stack)
             {
                 <span>@tech</span>
             }
         </div>
     </div>
-    <span class="scroll-hint" aria-hidden="true">
-        <span></span>
-    </span>
 </section>
 
-<section class="section" id="leistung">
-    <div class="section-head reveal">
-        <p class="kicker">Leistung</p>
-        <h2 class="section-title">Klare technische Grundlagen. Saubere Umsetzung.</h2>
-        <p class="section-intro">@site.ServicesIntro</p>
-    </div>
-
-    <div class="service-grid">
-        @foreach (var service in site.Services)
-        {
-            <article class="service-card reveal">
-                <span class="service-number">@service.Number</span>
-                <h3>@service.Title</h3>
-                <p>@service.Description</p>
-            </article>
-        }
-    </div>
-
-    <div class="stack-words reveal" aria-label="Technologie-Stack">
-        @foreach (var tech in site.Stack)
-        {
-            <span>@tech</span>
-        }
-    </div>
-</section>
-
-<section class="atmosphere">
-    <img class="atmosphere-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=70"
+<figure class="plate" aria-labelledby="plate-caption">
+    <img class="plate-img"
+         src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=70"
          alt="" aria-hidden="true" loading="lazy" decoding="async">
-    <div class="atmosphere-inner reveal">
-        <p class="kicker">Infrastruktur</p>
-        <p class="atmosphere-text">Plattformen, Datenmodelle und Software werden gemeinsam gedacht — vom Rechenzentrum bis zur Oberfläche.</p>
-    </div>
-</section>
+    <span class="plate-tick tl" aria-hidden="true"></span>
+    <span class="plate-tick tr" aria-hidden="true"></span>
+    <span class="plate-tick bl" aria-hidden="true"></span>
+    <span class="plate-tick br" aria-hidden="true"></span>
+    <figcaption class="plate-caption" id="plate-caption">
+        <span class="plate-tag">ABB. 01 — INFRASTRUKTUR / 2026</span>
+        <span class="plate-quote">Plattformen, Datenmodelle und Software werden gemeinsam gedacht — vom Rechenzentrum bis zur Oberfläche.</span>
+    </figcaption>
+</figure>
 
-<section class="section" id="projekte">
-    <div class="section-head reveal">
-        <p class="kicker">Projekte</p>
-        <h2 class="section-title">Übersicht eigener Produkte.</h2>
-        <p class="section-intro">@site.ProjectsIntro</p>
-    </div>
+<section class="section" id="projekte" data-rail="§ 02 — PROJEKTE">
+    <div class="wrap">
+        <div class="section-head">
+            <p class="kicker">§ 02 — Projekte</p>
+            <h2 class="section-title">Register eigener Produkte.</h2>
+            <p class="section-intro">@site.ProjectsIntro</p>
+        </div>
 
-    <div class="project-grid">
-        @foreach (var project in site.Projects)
-        {
-            <article class="project-card reveal">
-                <div class="project-visual" style="--project-accent: @project.Accent;">
-                    <span class="project-mark" aria-hidden="true">@project.Mark</span>
-                    <span class="project-visual-name">@project.Name</span>
-                </div>
-                <div class="project-body">
-                    <div class="project-headline">
+        <div class="ledger">
+            <div class="ledger-head" aria-hidden="true">
+                <span>Reg</span>
+                <span>Produkt</span>
+                <span>Status</span>
+                <span>Stack</span>
+                <span>Links</span>
+            </div>
+            @{ var regNo = 0; }
+            @foreach (var project in site.Projects)
+            {
+                regNo++;
+                <article class="ledger-row">
+                    <span class="index-numeral ledger-reg" aria-hidden="true">@($"{regNo:00}")</span>
+                    <div class="ledger-product">
                         <h3>@project.Name</h3>
-                        <span class="project-tagline">@project.Tagline</span>
+                        <span class="ledger-tagline">@project.Tagline</span>
+                        <p class="ledger-desc">@project.Description</p>
                     </div>
-                    <p>@project.Description</p>
-                    <div class="project-tags" aria-label="Tech-Stack">
-                        @foreach (var tag in project.Tags)
-                        {
-                            <span>@tag</span>
-                        }
+                    <div class="ledger-status">
+                        <span class="pip" aria-hidden="true"></span>ONLINE
                     </div>
-                    <div class="project-links">
+                    <div class="ledger-stack">
+                        @string.Join(" / ", project.Tags)
+                    </div>
+                    <div class="ledger-links">
                         @if (project.Website is not null)
                         {
-                            <a class="project-link" href="@project.Website" target="_blank" rel="noopener noreferrer">
-                                Website
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-                            </a>
+                            <a href="@project.Website" target="_blank" rel="noopener noreferrer">Website<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
                         }
                         @if (project.Repo is not null)
                         {
-                            <a class="project-link" href="@project.Repo" target="_blank" rel="noopener noreferrer">
-                                Code
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-                            </a>
+                            <a href="@project.Repo" target="_blank" rel="noopener noreferrer">Code<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
                         }
                     </div>
-                </div>
-            </article>
-        }
+                </article>
+            }
+        </div>
     </div>
 </section>
 
-<section class="section" id="referenzen">
-    <div class="section-head reveal">
-        <p class="kicker">Referenzen</p>
-        <h2 class="section-title">Ausgewählte Projekte mit technischem Anspruch.</h2>
-        <p class="section-intro">
-            Projekte, in denen Architektur, Entwicklung und Beratung praktisch zusammenkommen:
-            Plattformen, Handelssysteme und digitale Verwaltungsprozesse.
-        </p>
-    </div>
+<section class="section" id="referenzen" data-rail="§ 03 — REFERENZEN">
+    <div class="wrap">
+        <div class="section-head">
+            <p class="kicker">§ 03 — Referenzen</p>
+            <h2 class="section-title">Ausgewählte Kundenprojekte.</h2>
+        </div>
 
-    <div class="reference-list">
-        @foreach (var reference in site.References)
-        {
-            <article class="reference-card reveal">
-                <div class="reference-head">
-                    <span class="reference-client">@reference.Client</span>
-                    <h3>@reference.Title</h3>
-                </div>
-                <p>@reference.Description</p>
-                <div class="reference-tags" aria-label="Key Skills">
-                    @foreach (var tag in reference.Tags)
-                    {
-                        <span>@tag</span>
-                    }
-                </div>
-            </article>
-        }
+        <div class="rows rows-ref" role="list">
+            @foreach (var reference in site.References)
+            {
+                <article class="row row-ref" role="listitem">
+                    <span class="ref-client">@reference.Client</span>
+                    <div class="row-ref-body">
+                        <h3 class="row-title">@reference.Title</h3>
+                        <p class="row-desc">@reference.Description</p>
+                        <div class="ref-tags">@string.Join(" / ", reference.Tags)</div>
+                    </div>
+                </article>
+            }
+        </div>
     </div>
 </section>
 
-<section class="section contact" id="kontakt">
-    <div class="contact-inner reveal">
-        <p class="kicker">Kontakt</p>
-        <h2 class="section-title">@site.ContactHeadline</h2>
-        <p class="section-intro">@site.ContactBody</p>
+<section class="section contact" id="kontakt" data-rail="§ 04 — KONTAKT">
+    <div class="wrap">
+        <div class="section-head">
+            <p class="kicker">§ 04 — Kontakt</p>
+            <h2 class="section-title">@site.ContactHeadline</h2>
+            <p class="section-intro">@site.ContactBody</p>
+        </div>
         <a class="contact-email" href="mailto:@site.Email">@site.Email</a>
     </div>
 </section>
