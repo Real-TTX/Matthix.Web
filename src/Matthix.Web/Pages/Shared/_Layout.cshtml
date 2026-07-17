@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@(ViewData["Title"] ?? Site.BrandName)</title>
     <meta name="description" content="@Site.BrandName – @Site.Tagline" />
-    <meta name="theme-color" content="#F3F0E9" />
+    <meta name="theme-color" content="#edf3f2" />
     <meta property="og:title" content="@Site.BrandName" />
     <meta property="og:description" content="@Site.Tagline" />
     <meta property="og:type" content="website" />
@@ -16,30 +16,21 @@
 <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-    <aside class="gutter-rail" aria-hidden="true">
-        <span class="rail-brand">@Site.BrandName</span>
-        <span class="rail-square"></span>
-        <span class="rail-geo">@Site.Location.ToUpperInvariant() @Site.Coordinates</span>
-        <span class="rail-section" id="rail-section">§ 00 — START</span>
-    </aside>
-
     <header class="masthead" id="masthead">
-        <div class="masthead-inner">
+        <div class="wrap masthead-inner">
             <a class="brand" href="/" aria-label="@Site.BrandName Startseite">
                 <span class="brand-mark" aria-hidden="true">
                     <svg viewBox="0 0 220 170" role="img">
-                        <path pathLength="1" d="M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162"></path>
+                        <path d="@Site.LogoPath"></path>
                     </svg>
                 </span>
                 <span class="brand-text">@Site.BrandName</span>
             </a>
 
             <nav class="site-nav" aria-label="Hauptnavigation">
-                @{ var navIndex = 0; }
                 @foreach (var item in Site.Navigation)
                 {
-                    navIndex++;
-                    <a data-nav-link href="@item.Href"><span class="nav-num">@($"{navIndex:00}")</span>@item.Label</a>
+                    <a data-nav-link href="@item.Href">@item.Label</a>
                 }
             </nav>
         </div>
@@ -51,18 +42,17 @@
     </main>
 
     <footer class="site-footer">
-        <p class="colophon">
-            <span>Gesetzt in Helvetica&nbsp;Neue / Segoe&nbsp;UI</span>
-            <span class="colophon-sep">·</span>
-            <span>@Site.BrandName</span>
-            <span class="colophon-sep">·</span>
-            <span>@Site.Location.ToUpperInvariant() @Site.Coordinates</span>
-            <span class="colophon-sep">·</span>
-            <span>MMXXVI</span>
-            <span class="colophon-sep">·</span>
-            <a href="mailto:@Site.Email">@Site.Email.ToUpperInvariant()</a>
-            <span class="colophon-square" aria-hidden="true"></span>
-        </p>
+        <div class="divider" data-divider></div>
+        <div class="wrap footer-row">
+            <span class="footer-brand">
+                <span class="footer-mark" aria-hidden="true">
+                    <svg viewBox="0 0 220 170" role="img"><path d="@Site.LogoPath"></path></svg>
+                </span>
+                <span class="footer-word">@Site.BrandName</span>
+            </span>
+            <span class="footer-meta">@Site.Location @Site.Coordinates · MMXXVI</span>
+            <a class="footer-mail" href="mailto:@Site.Email">@Site.Email</a>
+        </div>
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>

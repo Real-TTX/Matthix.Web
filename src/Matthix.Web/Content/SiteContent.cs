@@ -11,6 +11,12 @@ public sealed class SiteContent
     public string Tagline => "Plattformen. Netzwerke. Software.";
     public string Email => "hi@matthix.de";
 
+    // The single continuous "M" squiggle path, reused everywhere (masthead, hero
+    // living signature, footer, watermark) so the mark stays byte-identical.
+    public string LogoPath =>
+        "M35 145 C18 126, 31 74, 64 28 C79 8, 100 11, 97 42 C94 79, 84 117, 96 124 " +
+        "C109 132, 132 89, 172 41 C193 15, 210 8, 203 43 C195 83, 182 126, 166 162";
+
     // Identity fields used by the hero "readout" panel, the gutter rail and the colophon.
     public string Role => "Platform / Network / Software Engineer";
     public string Location => "Stuttgart";

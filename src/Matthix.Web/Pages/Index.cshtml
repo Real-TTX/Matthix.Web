@@ -5,62 +5,71 @@
     var site = Model.Site;
 }
 
-<section class="hero" id="home" data-rail="§ 00 — START">
+<section class="hero" id="home">
     <div class="wrap hero-grid">
-        <span class="index-numeral hero-numeral" aria-hidden="true">00</span>
-
-        <div class="hero-head">
-            <p class="kicker">§ 00 — MATTHIX</p>
+        <div class="hero-copy">
+            <p class="kicker">Portfolio</p>
             <h1 class="hero-title">
+                <span class="vh">@site.BrandName. </span>
                 @foreach (var word in site.Tagline.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                 {
                     <span class="hl-line">@word</span>
                 }
             </h1>
+            <p class="hero-lead">@site.HeroLead</p>
+            <p class="hero-meta">
+                <span>@site.Role</span>
+                <span class="dot" aria-hidden="true">·</span>
+                <span>@site.Location @site.Coordinates</span>
+                <span class="dot" aria-hidden="true">·</span>
+                <span class="avail"><span class="pip" aria-hidden="true"></span>@site.Availability</span>
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-solid" href="#kontakt">Kontakt aufnehmen</a>
+                <a class="btn btn-line" href="#leistung">Leistungen ansehen</a>
+            </div>
         </div>
 
-        <p class="hero-lead">@site.HeroLead</p>
-
-        <dl class="readout">
-            <div class="readout-row"><dt>Rolle</dt><span class="leader" aria-hidden="true"></span><dd>@site.Role</dd></div>
-            <div class="readout-row"><dt>Standort</dt><span class="leader" aria-hidden="true"></span><dd>@site.Location · @site.Coordinates</dd></div>
-            <div class="readout-row"><dt>Stack</dt><span class="leader" aria-hidden="true"></span><dd>Proxmox · UniFi · Hyper-V · MSSQL</dd></div>
-            <div class="readout-row"><dt>Status</dt><span class="leader" aria-hidden="true"></span><dd><span class="pip" aria-hidden="true"></span>@site.Availability</dd></div>
-        </dl>
-
-        <div class="hero-actions">
-            <a class="btn btn-solid" href="#kontakt">Kontakt aufnehmen</a>
-            <a class="btn btn-line" href="#leistung">Leistungen ansehen</a>
+        <div class="hero-mark" aria-hidden="true">
+            <svg class="signature" viewBox="0 0 220 170" preserveAspectRatio="xMidYMid meet">
+                <path class="sig-ghost" d="@site.LogoPath"></path>
+                <g class="sig-ink-group">
+                    <path class="sig-ink" pathLength="1" d="@site.LogoPath"></path>
+                    <path class="sig-glint" pathLength="1" d="@site.LogoPath"></path>
+                </g>
+            </svg>
         </div>
     </div>
-    <span class="scroll-hint" aria-hidden="true">SCROLL ↓</span>
+    <span class="scroll-hint" aria-hidden="true">Scroll ↓</span>
 </section>
 
-<section class="section" id="leistung" data-rail="§ 01 — LEISTUNG">
+<div class="divider" data-divider></div>
+
+<section class="section" id="leistung">
     <div class="wrap">
         <div class="section-head">
-            <p class="kicker">§ 01 — Leistung</p>
+            <p class="eyebrow"><span class="eyebrow-num">01</span> Leistung</p>
             <h2 class="section-title">Klare technische Grundlagen. Saubere Umsetzung.</h2>
             <p class="section-intro">@site.ServicesIntro</p>
         </div>
 
-        <div class="rows" role="list">
+        <div class="svc-grid">
             @foreach (var service in site.Services)
             {
-                <article class="row" role="listitem">
-                    <span class="index-numeral row-numeral" aria-hidden="true">@service.Number</span>
-                    <h3 class="row-title">@service.Title</h3>
-                    <p class="row-desc">@service.Description</p>
+                <article class="svc">
+                    <span class="svc-num" aria-hidden="true">@service.Number</span>
+                    <h3 class="svc-title">@service.Title</h3>
+                    <p class="svc-desc">@service.Description</p>
                 </article>
             }
         </div>
 
-        <div class="stack-index" aria-label="Technologie-Stack">
+        <ul class="chips" aria-label="Technologie-Stack">
             @foreach (var tech in site.Stack)
             {
-                <span>@tech</span>
+                <li>@tech</li>
             }
-        </div>
+        </ul>
     </div>
 </section>
 
@@ -68,58 +77,45 @@
     <img class="plate-img"
          src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=70"
          alt="" aria-hidden="true" loading="lazy" decoding="async">
-    <span class="plate-tick tl" aria-hidden="true"></span>
-    <span class="plate-tick tr" aria-hidden="true"></span>
-    <span class="plate-tick bl" aria-hidden="true"></span>
-    <span class="plate-tick br" aria-hidden="true"></span>
     <figcaption class="plate-caption" id="plate-caption">
-        <span class="plate-tag">ABB. 01 — INFRASTRUKTUR / 2026</span>
-        <span class="plate-quote">Plattformen, Datenmodelle und Software werden gemeinsam gedacht — vom Rechenzentrum bis zur Oberfläche.</span>
+        <span class="plate-caption-text">Plattformen, Datenmodelle und Software — gemeinsam gedacht, vom Rechenzentrum bis zur Oberfläche.</span>
     </figcaption>
 </figure>
 
-<section class="section" id="projekte" data-rail="§ 02 — PROJEKTE">
+<div class="divider" data-divider></div>
+
+<section class="section" id="projekte">
+    <span class="watermark" aria-hidden="true">
+        <svg viewBox="0 0 220 170" preserveAspectRatio="xMidYMid meet"><path d="@site.LogoPath"></path></svg>
+    </span>
     <div class="wrap">
         <div class="section-head">
-            <p class="kicker">§ 02 — Projekte</p>
-            <h2 class="section-title">Register eigener Produkte.</h2>
+            <p class="eyebrow"><span class="eyebrow-num">02</span> Projekte</p>
+            <h2 class="section-title">Eigene Produkte.</h2>
             <p class="section-intro">@site.ProjectsIntro</p>
         </div>
 
-        <div class="ledger">
-            <div class="ledger-head" aria-hidden="true">
-                <span>Reg</span>
-                <span>Produkt</span>
-                <span>Status</span>
-                <span>Stack</span>
-                <span>Links</span>
-            </div>
-            @{ var regNo = 0; }
+        <div class="proj-list">
             @foreach (var project in site.Projects)
             {
-                regNo++;
-                <article class="ledger-row">
-                    <span class="index-numeral ledger-reg" aria-hidden="true">@($"{regNo:00}")</span>
-                    <div class="ledger-product">
-                        <h3>@project.Name</h3>
-                        <span class="ledger-tagline">@project.Tagline</span>
-                        <p class="ledger-desc">@project.Description</p>
+                <article class="proj">
+                    <div class="proj-headline">
+                        <h3 class="proj-name">@project.Name</h3>
+                        <span class="proj-tagline">@project.Tagline</span>
                     </div>
-                    <div class="ledger-status">
-                        <span class="pip" aria-hidden="true"></span>ONLINE
-                    </div>
-                    <div class="ledger-stack">
-                        @string.Join(" / ", project.Tags)
-                    </div>
-                    <div class="ledger-links">
-                        @if (project.Website is not null)
-                        {
-                            <a href="@project.Website" target="_blank" rel="noopener noreferrer">Website<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
-                        }
-                        @if (project.Repo is not null)
-                        {
-                            <a href="@project.Repo" target="_blank" rel="noopener noreferrer">Code<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
-                        }
+                    <p class="proj-desc">@project.Description</p>
+                    <div class="proj-foot">
+                        <span class="proj-tags">@string.Join(" · ", project.Tags)</span>
+                        <span class="proj-links">
+                            @if (project.Website is not null)
+                            {
+                                <a href="@project.Website" target="_blank" rel="noopener noreferrer">Website<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
+                            }
+                            @if (project.Repo is not null)
+                            {
+                                <a href="@project.Repo" target="_blank" rel="noopener noreferrer">Code<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
+                            }
+                        </span>
                     </div>
                 </article>
             }
@@ -127,36 +123,41 @@
     </div>
 </section>
 
-<section class="section" id="referenzen" data-rail="§ 03 — REFERENZEN">
+<div class="divider" data-divider></div>
+
+<section class="section" id="referenzen">
     <div class="wrap">
         <div class="section-head">
-            <p class="kicker">§ 03 — Referenzen</p>
+            <p class="eyebrow"><span class="eyebrow-num">03</span> Referenzen</p>
             <h2 class="section-title">Ausgewählte Kundenprojekte.</h2>
         </div>
 
-        <div class="rows rows-ref" role="list">
+        <div class="ref-grid">
             @foreach (var reference in site.References)
             {
-                <article class="row row-ref" role="listitem">
+                <article class="ref">
                     <span class="ref-client">@reference.Client</span>
-                    <div class="row-ref-body">
-                        <h3 class="row-title">@reference.Title</h3>
-                        <p class="row-desc">@reference.Description</p>
-                        <div class="ref-tags">@string.Join(" / ", reference.Tags)</div>
-                    </div>
+                    <h3 class="ref-title">@reference.Title</h3>
+                    <p class="ref-desc">@reference.Description</p>
+                    <span class="ref-tags">@string.Join(" · ", reference.Tags)</span>
                 </article>
             }
         </div>
     </div>
 </section>
 
-<section class="section contact" id="kontakt" data-rail="§ 04 — KONTAKT">
+<div class="divider" data-divider></div>
+
+<section class="section contact" id="kontakt">
     <div class="wrap">
         <div class="section-head">
-            <p class="kicker">§ 04 — Kontakt</p>
+            <p class="eyebrow"><span class="eyebrow-num">04</span> Kontakt</p>
             <h2 class="section-title">@site.ContactHeadline</h2>
             <p class="section-intro">@site.ContactBody</p>
         </div>
-        <a class="contact-email" href="mailto:@site.Email">@site.Email</a>
+        <p class="contact-line">
+            Schreib mir:
+            <a class="contact-email" href="mailto:@site.Email">@site.Email</a>
+        </p>
     </div>
 </section>
